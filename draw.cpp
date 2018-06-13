@@ -83,6 +83,7 @@ void ElevatorMove(HDC hdc)
 				vectorE.push_back(personFloor);
 				vector0.erase(it);
 			}
+			E_move = true;
 			break;
 
 
@@ -113,6 +114,7 @@ void ElevatorMove(HDC hdc)
 				vectorE.push_back(personFloor);
 				vector1.erase(it);
 			}
+			E_move = true;
 			break;
 
 
@@ -143,6 +145,7 @@ void ElevatorMove(HDC hdc)
 				vectorE.push_back(personFloor);
 				vector2.erase(it);
 			}
+			E_move = true;
 			break;
 
 
@@ -166,6 +169,7 @@ void ElevatorMove(HDC hdc)
 				vectorE.push_back(personFloor);
 				vector3.erase(it);
 			}
+			E_move = true;
 			break;
 		}
 	}
