@@ -174,7 +174,52 @@ void ElevatorMove(HDC hdc)
 		}
 	}
 
+void Draw_passengers_3 (int size)
+{
+	for(int i=0;i<size;i++)
+		graphics.DrawLine(&pen_black, 225 - i*25, 670, 240 - i*25, 670);
+		graphics.DrawLine(&pen_black, 225 - i*25, 670, 225 - i*25, 650);
+		graphics.DrawLine(&pen_black, 240 - i*25, 670, 240 - i*25, 650);
+	for(int i=size;i<11;i++)
+		graphics.DrawLine(&pen_white, 226 - i*25, 670, 241 - i*25, 670);
+		graphics.DrawLine(&pen_white, 226 - i*25, 670, 226 - i*25, 650);
+		graphics.DrawLine(&pen_white, 241 - i*25, 670, 241 - i*25, 650);
+}
 
+void Draw_passengers_2 (int size)
+{
+	for(int i=0;i<size;i++)
+		graphics.DrawLine(&pen_black, 225 - i*25, 520, 240 - i*25, 520);
+		graphics.DrawLine(&pen_black, 225 - i*25, 520, 225 - i*25, 500);
+		graphics.DrawLine(&pen_black, 240 - i*25, 520, 240 - i*25, 500);
+	for(int i=size;i<11;i++)
+		graphics.DrawLine(&pen_white, 226 - i*25, 520, 241 - i*25, 520);
+		graphics.DrawLine(&pen_white, 226 - i*25, 520, 226 - i*25, 500);
+		graphics.DrawLine(&pen_white, 241 - i*25, 520, 241 - i*25, 500);	
+}
+void Draw_passengers_1 (int size)
+{
+	for(int i=0;i<size;i++)
+		graphics.DrawLine(&pen_black, 225 - i*25, 370, 240 - i*25, 370);
+		graphics.DrawLine(&pen_black, 225 - i*25, 370, 225 - i*25, 350);
+		graphics.DrawLine(&pen_black, 240 - i*25, 370, 240 - i*25, 350);
+	for(int i=size;i<11;i++)
+		graphics.DrawLine(&pen_white, 226 - i*25, 370, 241 - i*25, 370);
+		graphics.DrawLine(&pen_white, 226 - i*25, 370, 226 - i*25, 350);
+		graphics.DrawLine(&pen_white, 241 - i*25, 370, 241 - i*25, 350);	
+}
+void Draw_passengers_0 (int size)
+{
+	for(int i=0;i<size;i++)
+		graphics.DrawLine(&pen_black, 225 - i*15, 220, 240 - i*15, 220);
+		graphics.DrawLine(&pen_black, 225 - i*15, 220, 225 - i*15, 200);
+		graphics.DrawLine(&pen_black, 240 - i*15, 220, 240 - i*15, 200);
+	for(int i=size;i<11;i++)
+		graphics.DrawLine(&pen_white, 226 - i*15, 220, 241 - i*15, 220);
+		graphics.DrawLine(&pen_white, 226 - i*15, 220, 226 - i*15, 200);
+		graphics.DrawLine(&pen_white, 241 - i*15, 220, 241 - i*15, 200);	
+}
+	
 	switch (next_floor)
 	{
 	case 0:
@@ -200,6 +245,7 @@ void MyOnPaint(HDC hdc)
 	Graphics graphics(hdc);
 	Pen pen_blue(Color(255, 0, 0, 255));
 	Pen pen_black(Color(255, 0, 0, 0));
+	Pen pen_white(Color(255, 255, 255, 255));
 	//graphics.DrawLine(&pen,0,0,200,100);
 
 	ElevatorMove(hdc);
