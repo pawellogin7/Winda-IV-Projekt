@@ -218,6 +218,7 @@ void MyOnPaint(HDC hdc)
 	Graphics graphics(hdc);
 	Pen pen_blue(Color(255, 0, 0, 255));
 	Pen pen_black(Color(255, 0, 0, 0));
+	Pen pen_white(Color(255, 255, 255, 255));
 	Font font(&FontFamily(L"Arial"), 12);
 	LinearGradientBrush brush(Rect(0, 0, 100, 100), Color::Red, Color::Black, LinearGradientModeHorizontal);
 	//graphics.DrawLine(&pen,0,0,200,100);
