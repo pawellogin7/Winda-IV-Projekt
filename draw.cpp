@@ -57,6 +57,7 @@ void ElevatorMove(HDC hdc)
 			value1++;
 		else
 			E_move = false;
+
 	}
 	else
 	{
@@ -65,23 +66,26 @@ void ElevatorMove(HDC hdc)
 		case FLOOR_0:
 			next_floor = 4;
 			direction = "up";
-			for (vector<int>::iterator it = vectorE.begin(); it != vectorE.end(); it++)
+			for (int i = 0; i < vectorE.size(); i++)
 			{
-				int personFloor = *it;
+				int personFloor = vectorE[i];
 				if (personFloor == 0)
-					vectorE.erase(it);
+				{
+					vectorE.erase(vectorE.begin() + i);
+					i--;
+				}
 				else if (personFloor < next_floor)
 					next_floor = personFloor;
-
 			}
 
-			for (vector<int>::iterator it = vector0.begin(); it != vector0.end() && vectorE.size() < 8; it++)
+			for (int i = 0; i < vector0.size() && vectorE.size() < 8; i++)
 			{
-				int personFloor = *it;
+				int personFloor = vector0[i];
 				if ((direction == "up") && (personFloor < next_floor) && (personFloor > 0))
 					next_floor = personFloor;
 				vectorE.push_back(personFloor);
-				vector0.erase(it);
+				vector0.erase(vector0.begin() + i);
+				i--;
 			}
 			E_move = true;
 			break;
@@ -93,26 +97,31 @@ void ElevatorMove(HDC hdc)
 			else
 				next_floor = 0;
 
-			for (vector<int>::iterator it = vectorE.begin(); it != vectorE.end(); it++)
+			for (int i = 0; i < vectorE.size(); i++)
 			{
-				int personFloor = *it;
-				if (personFloor == 1)
-					vectorE.erase(it);
+				int personFloor = vectorE[i];
+				if (personFloor == 0)
+				{
+					vectorE.erase(vectorE.begin() + i);
+					i--;
+				}
 				else if ((direction == "up") && (personFloor < next_floor) && (personFloor > 1))
 					next_floor = personFloor;
 				else if ((direction == "down") && (personFloor > next_floor) && (personFloor < 1))
 					next_floor = personFloor;
 			}
 
-			for (vector<int>::iterator it = vector1.begin(); it != vector1.end() && vectorE.size() < 8; it++)
+
+			for (int i = 0; i < vector1.size() && vectorE.size() < 8; i++)
 			{
-				int personFloor = *it;
+				int personFloor = vector1[i];
 				if ((direction == "up") && (personFloor < next_floor) && (personFloor > 1))
 					next_floor = personFloor;
 				else if ((direction == "down") && (personFloor > next_floor) && (personFloor < 1))
 					next_floor = personFloor;
 				vectorE.push_back(personFloor);
-				vector1.erase(it);
+				vector1.erase(vector1.begin() + i);
+				i--;
 			}
 			E_move = true;
 			break;
@@ -124,26 +133,31 @@ void ElevatorMove(HDC hdc)
 			else
 				next_floor = 0;
 
-			for (vector<int>::iterator it = vectorE.begin(); it != vectorE.end(); it++)
+			for (int i = 0; i < vectorE.size(); i++)
 			{
-				int personFloor = *it;
-				if (personFloor == 2)
-					vectorE.erase(it);
+				int personFloor = vectorE[i];
+				if (personFloor == 0)
+				{
+					vectorE.erase(vectorE.begin() + i);
+					i--;
+				}
 				else if ((direction == "up") && (personFloor < next_floor) && (personFloor > 2))
 					next_floor = personFloor;
 				else if ((direction == "down") && (personFloor > next_floor) && (personFloor < 2))
 					next_floor = personFloor;
 			}
 
-			for (vector<int>::iterator it = vector2.begin(); it != vector2.end() && vectorE.size() < 8; it++)
+
+			for (int i = 0; i < vector2.size() && vectorE.size() < 8; i++)
 			{
-				int personFloor = *it;
+				int personFloor = vector2[i];
 				if ((direction == "up") && (personFloor < next_floor) && (personFloor > 2))
 					next_floor = personFloor;
 				else if ((direction == "down") && (personFloor > next_floor) && (personFloor < 2))
 					next_floor = personFloor;
 				vectorE.push_back(personFloor);
-				vector2.erase(it);
+				vector2.erase(vector2.begin() + i);
+				i--;
 			}
 			E_move = true;
 			break;
@@ -152,88 +166,47 @@ void ElevatorMove(HDC hdc)
 		case FLOOR_3:
 			next_floor = 0;
 			direction = "down";
-			for (vector<int>::iterator it = vectorE.begin(); it != vectorE.end(); it++)
+			for (int i = 0; i < vectorE.size(); i++)
 			{
-				int personFloor = *it;
-				if (personFloor == 3)
-					vectorE.erase(it);
+				int personFloor = vectorE[i];
+				if (personFloor == 0)
+				{
+					vectorE.erase(vectorE.begin() + i);
+					i--;
+				}
 				else if ((direction == "down") && (personFloor > next_floor) && (personFloor < 3))
 					next_floor = personFloor;
 			}
 
-			for (vector<int>::iterator it = vector3.begin(); it != vector3.end() && vectorE.size() < 8; it++)
+			for (int i = 0; i < vector3.size() && vectorE.size() < 8; i++)
 			{
-				int personFloor = *it;
+				int personFloor = vector3[i];
 				if ((direction == "down") && (personFloor > next_floor) && (personFloor < 3))
 					next_floor = personFloor;
 				vectorE.push_back(personFloor);
-				vector3.erase(it);
+				vector3.erase(vector3.begin() + i);
+				i--;
 			}
 			E_move = true;
 			break;
 		}
-	}
 
-void Draw_passengers_3 (int size)
-{
-	for(int i=0;i<size;i++)
-		graphics.DrawLine(&pen_black, 225 - i*25, 670, 240 - i*25, 670);
-		graphics.DrawLine(&pen_black, 225 - i*25, 670, 225 - i*25, 650);
-		graphics.DrawLine(&pen_black, 240 - i*25, 670, 240 - i*25, 650);
-	for(int i=size;i<11;i++)
-		graphics.DrawLine(&pen_white, 226 - i*25, 670, 241 - i*25, 670);
-		graphics.DrawLine(&pen_white, 226 - i*25, 670, 226 - i*25, 650);
-		graphics.DrawLine(&pen_white, 241 - i*25, 670, 241 - i*25, 650);
-}
 
-void Draw_passengers_2 (int size)
-{
-	for(int i=0;i<size;i++)
-		graphics.DrawLine(&pen_black, 225 - i*25, 520, 240 - i*25, 520);
-		graphics.DrawLine(&pen_black, 225 - i*25, 520, 225 - i*25, 500);
-		graphics.DrawLine(&pen_black, 240 - i*25, 520, 240 - i*25, 500);
-	for(int i=size;i<11;i++)
-		graphics.DrawLine(&pen_white, 226 - i*25, 520, 241 - i*25, 520);
-		graphics.DrawLine(&pen_white, 226 - i*25, 520, 226 - i*25, 500);
-		graphics.DrawLine(&pen_white, 241 - i*25, 520, 241 - i*25, 500);	
-}
-void Draw_passengers_1 (int size)
-{
-	for(int i=0;i<size;i++)
-		graphics.DrawLine(&pen_black, 225 - i*25, 370, 240 - i*25, 370);
-		graphics.DrawLine(&pen_black, 225 - i*25, 370, 225 - i*25, 350);
-		graphics.DrawLine(&pen_black, 240 - i*25, 370, 240 - i*25, 350);
-	for(int i=size;i<11;i++)
-		graphics.DrawLine(&pen_white, 226 - i*25, 370, 241 - i*25, 370);
-		graphics.DrawLine(&pen_white, 226 - i*25, 370, 226 - i*25, 350);
-		graphics.DrawLine(&pen_white, 241 - i*25, 370, 241 - i*25, 350);	
-}
-void Draw_passengers_0 (int size)
-{
-	for(int i=0;i<size;i++)
-		graphics.DrawLine(&pen_black, 225 - i*15, 220, 240 - i*15, 220);
-		graphics.DrawLine(&pen_black, 225 - i*15, 220, 225 - i*15, 200);
-		graphics.DrawLine(&pen_black, 240 - i*15, 220, 240 - i*15, 200);
-	for(int i=size;i<11;i++)
-		graphics.DrawLine(&pen_white, 226 - i*15, 220, 241 - i*15, 220);
-		graphics.DrawLine(&pen_white, 226 - i*15, 220, 226 - i*15, 200);
-		graphics.DrawLine(&pen_white, 241 - i*15, 220, 241 - i*15, 200);	
-}
-	
-	switch (next_floor)
-	{
-	case 0:
-		floor_cord = FLOOR_0;
-		break;
-	case 1:
-		floor_cord = FLOOR_1;
-		break;
-	case 2:
-		floor_cord = FLOOR_2;
-		break;
-	case 3:
-		floor_cord = FLOOR_3;
-		break;
+		switch (next_floor)
+		{
+		case 0:
+			floor_cord = FLOOR_0;
+			break;
+		case 1:
+			floor_cord = FLOOR_1;
+			break;
+		case 2:
+			floor_cord = FLOOR_2;
+			break;
+		case 3:
+			floor_cord = FLOOR_3;
+			break;
+		}
 	}
 
 }
@@ -245,14 +218,13 @@ void MyOnPaint(HDC hdc)
 	Graphics graphics(hdc);
 	Pen pen_blue(Color(255, 0, 0, 255));
 	Pen pen_black(Color(255, 0, 0, 0));
-	Pen pen_white(Color(255, 255, 255, 255));
 	//graphics.DrawLine(&pen,0,0,200,100);
 
 	ElevatorMove(hdc);
 
 
 
-	graphics.DrawRectangle(&pen_blue,100+value,100,10, 20);
+	//graphics.DrawRectangle(&pen_blue, 100 + value, 100, 10, 20);
 	graphics.DrawRectangle(&pen_blue, 250, value1 - 150, 120, 150);
 	graphics.DrawLine(&pen_black, 0, 650, 250, 650);
 	graphics.DrawLine(&pen_black, 0, 500, 250, 500);
@@ -263,21 +235,21 @@ void MyOnPaint(HDC hdc)
 
 int OnCreate(HWND window)
 {
-   SetTimer(window, TMR_1, 25, 0);
-   return 0;
+	SetTimer(window, TMR_1, 25, 0);
+	return 0;
 }
 
 
 
 int APIENTRY _tWinMain(HINSTANCE hInstance,
-                     HINSTANCE hPrevInstance,
-                     LPTSTR    lpCmdLine,
-                     int       nCmdShow)
+	HINSTANCE hPrevInstance,
+	LPTSTR    lpCmdLine,
+	int       nCmdShow)
 {
 	UNREFERENCED_PARAMETER(hPrevInstance);
 	UNREFERENCED_PARAMETER(lpCmdLine);
-	
- 	// TODO: Place code here.
+
+	// TODO: Place code here.
 	MSG msg;
 	HACCEL hAccelTable;
 
@@ -293,7 +265,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 	MyRegisterClass(hInstance);
 
 	// Perform application initialization:
-	if (!InitInstance (hInstance, nCmdShow))
+	if (!InitInstance(hInstance, nCmdShow))
 	{
 		return FALSE;
 	}
@@ -312,7 +284,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 
 	GdiplusShutdown(gdiplusToken);
 
-	return (int) msg.wParam;
+	return (int)msg.wParam;
 }
 
 
@@ -336,17 +308,17 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
 
 	wcex.cbSize = sizeof(WNDCLASSEX);
 
-	wcex.style			= CS_HREDRAW | CS_VREDRAW;
-	wcex.lpfnWndProc	= WndProc;
-	wcex.cbClsExtra		= 0;
-	wcex.cbWndExtra		= 0;
-	wcex.hInstance		= hInstance;
-	wcex.hIcon			= LoadIcon(hInstance, MAKEINTRESOURCE(IDI_DRAW));
-	wcex.hCursor		= LoadCursor(NULL, IDC_ARROW);
-	wcex.hbrBackground	= (HBRUSH)(COLOR_WINDOW+1);
-	wcex.lpszMenuName	= MAKEINTRESOURCE(IDC_DRAW);
-	wcex.lpszClassName	= szWindowClass;
-	wcex.hIconSm		= LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_SMALL));
+	wcex.style = CS_HREDRAW | CS_VREDRAW;
+	wcex.lpfnWndProc = WndProc;
+	wcex.cbClsExtra = 0;
+	wcex.cbWndExtra = 0;
+	wcex.hInstance = hInstance;
+	wcex.hIcon = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_DRAW));
+	wcex.hCursor = LoadCursor(NULL, IDC_ARROW);
+	wcex.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
+	wcex.lpszMenuName = MAKEINTRESOURCE(IDC_DRAW);
+	wcex.lpszClassName = szWindowClass;
+	wcex.hIconSm = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_SMALL));
 
 	return RegisterClassEx(&wcex);
 }
@@ -363,148 +335,148 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
 //
 BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
-   HWND hWnd;
+	HWND hWnd;
 
-   hInst = hInstance; // Store instance handle in our global variable
+	hInst = hInstance; // Store instance handle in our global variable
 
-   hWnd = CreateWindow(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
-      CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, NULL, NULL, hInstance, NULL);
-   
-//0
-   hwndButton = CreateWindow(TEXT("button"), 
-	   TEXT("1"),                 
-	   WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, 
-	   40, 565,                                
-	   40, 40,
-	   hWnd,                                
-	   (HMENU)ID_BUTTON1F0,                  
-	   hInstance,                            
-	   NULL);
+	hWnd = CreateWindow(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
+		CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, NULL, NULL, hInstance, NULL);
 
-   hwndButton = CreateWindow(TEXT("button"),
-	   TEXT("2"),
-	   WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,
-	   100, 565,
-	   40, 40,
-	   hWnd,
-	   (HMENU)ID_BUTTON2F0,
-	   hInstance,
-	   NULL);
+	//0
+	hwndButton = CreateWindow(TEXT("button"),
+		TEXT("1"),
+		WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,
+		40, 565,
+		40, 40,
+		hWnd,
+		(HMENU)ID_BUTTON1F0,
+		hInstance,
+		NULL);
 
-   hwndButton = CreateWindow(TEXT("button"),
-	   TEXT("3"),
-	   WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,
-	   160, 565,
-	   40, 40,
-	   hWnd,
-	   (HMENU)ID_BUTTON3F0,
-	   hInstance,
-	   NULL);
+	hwndButton = CreateWindow(TEXT("button"),
+		TEXT("2"),
+		WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,
+		100, 565,
+		40, 40,
+		hWnd,
+		(HMENU)ID_BUTTON2F0,
+		hInstance,
+		NULL);
 
-//1
-   hwndButton = CreateWindow(TEXT("button"),
-	   TEXT("0"),
-	   WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,
-	   40, 415,
-	   40, 40,
-	   hWnd,
-	   (HMENU)ID_BUTTON0F1,
-	   hInstance,
-	   NULL);
+	hwndButton = CreateWindow(TEXT("button"),
+		TEXT("3"),
+		WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,
+		160, 565,
+		40, 40,
+		hWnd,
+		(HMENU)ID_BUTTON3F0,
+		hInstance,
+		NULL);
 
-   hwndButton = CreateWindow(TEXT("button"),
-	   TEXT("2"),
-	   WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,
-	   100, 415,
-	   40, 40,
-	   hWnd,
-	   (HMENU)ID_BUTTON2F1,
-	   hInstance,
-	   NULL);
+	//1
+	hwndButton = CreateWindow(TEXT("button"),
+		TEXT("0"),
+		WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,
+		40, 415,
+		40, 40,
+		hWnd,
+		(HMENU)ID_BUTTON0F1,
+		hInstance,
+		NULL);
 
-   hwndButton = CreateWindow(TEXT("button"),
-	   TEXT("3"),
-	   WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,
-	   160, 415,
-	   40, 40,
-	   hWnd,
-	   (HMENU)ID_BUTTON3F1,
-	   hInstance,
-	   NULL);
+	hwndButton = CreateWindow(TEXT("button"),
+		TEXT("2"),
+		WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,
+		100, 415,
+		40, 40,
+		hWnd,
+		(HMENU)ID_BUTTON2F1,
+		hInstance,
+		NULL);
 
-   //2
-   hwndButton = CreateWindow(TEXT("button"),
-	   TEXT("0"),
-	   WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,
-	   40, 265,
-	   40, 40,
-	   hWnd,
-	   (HMENU)ID_BUTTON0F2,
-	   hInstance,
-	   NULL);
+	hwndButton = CreateWindow(TEXT("button"),
+		TEXT("3"),
+		WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,
+		160, 415,
+		40, 40,
+		hWnd,
+		(HMENU)ID_BUTTON3F1,
+		hInstance,
+		NULL);
 
-   hwndButton = CreateWindow(TEXT("button"),
-	   TEXT("1"),
-	   WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,
-	   100, 265,
-	   40, 40,
-	   hWnd,
-	   (HMENU)ID_BUTTON1F2,
-	   hInstance,
-	   NULL);
+	//2
+	hwndButton = CreateWindow(TEXT("button"),
+		TEXT("0"),
+		WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,
+		40, 265,
+		40, 40,
+		hWnd,
+		(HMENU)ID_BUTTON0F2,
+		hInstance,
+		NULL);
 
-   hwndButton = CreateWindow(TEXT("button"),
-	   TEXT("3"),
-	   WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,
-	   160, 265,
-	   40, 40,
-	   hWnd,
-	   (HMENU)ID_BUTTON3F2,
-	   hInstance,
-	   NULL);
+	hwndButton = CreateWindow(TEXT("button"),
+		TEXT("1"),
+		WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,
+		100, 265,
+		40, 40,
+		hWnd,
+		(HMENU)ID_BUTTON1F2,
+		hInstance,
+		NULL);
 
-   //3
-   hwndButton = CreateWindow(TEXT("button"),
-	   TEXT("0"),
-	   WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,
-	   40, 115,
-	   40, 40,
-	   hWnd,
-	   (HMENU)ID_BUTTON0F3,
-	   hInstance,
-	   NULL);
+	hwndButton = CreateWindow(TEXT("button"),
+		TEXT("3"),
+		WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,
+		160, 265,
+		40, 40,
+		hWnd,
+		(HMENU)ID_BUTTON3F2,
+		hInstance,
+		NULL);
 
-   hwndButton = CreateWindow(TEXT("button"),
-	   TEXT("1"),
-	   WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,
-	   100, 115,
-	   40, 40,
-	   hWnd,
-	   (HMENU)ID_BUTTON1F3,
-	   hInstance,
-	   NULL);
+	//3
+	hwndButton = CreateWindow(TEXT("button"),
+		TEXT("0"),
+		WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,
+		40, 115,
+		40, 40,
+		hWnd,
+		(HMENU)ID_BUTTON0F3,
+		hInstance,
+		NULL);
 
-   hwndButton = CreateWindow(TEXT("button"),
-	   TEXT("2"),
-	   WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,
-	   160, 115,
-	   40, 40,
-	   hWnd,
-	   (HMENU)ID_BUTTON2F3,
-	   hInstance,
-	   NULL);
+	hwndButton = CreateWindow(TEXT("button"),
+		TEXT("1"),
+		WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,
+		100, 115,
+		40, 40,
+		hWnd,
+		(HMENU)ID_BUTTON1F3,
+		hInstance,
+		NULL);
 
-   OnCreate(hWnd);
+	hwndButton = CreateWindow(TEXT("button"),
+		TEXT("2"),
+		WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,
+		160, 115,
+		40, 40,
+		hWnd,
+		(HMENU)ID_BUTTON2F3,
+		hInstance,
+		NULL);
 
-   if (!hWnd)
-   {
-      return FALSE;
-   }
+	OnCreate(hWnd);
 
-   ShowWindow(hWnd, nCmdShow);
-   UpdateWindow(hWnd);
+	if (!hWnd)
+	{
+		return FALSE;
+	}
 
-   return TRUE;
+	ShowWindow(hWnd, nCmdShow);
+	UpdateWindow(hWnd);
+
+	return TRUE;
 }
 
 //
@@ -528,7 +500,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	switch (message)
 	{
 	case WM_COMMAND:
-		wmId    = LOWORD(wParam);
+		wmId = LOWORD(wParam);
 		wmEvent = HIWORD(wParam);
 		// Parse the menu selections:
 		switch (wmId)
@@ -609,12 +581,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	case WM_TIMER:
 		switch (wParam)
 		{
-			case TMR_1:
-				//force window to repaint
-				InvalidateRect(hWnd, NULL, TRUE);
-				hdc = BeginPaint(hWnd, &ps);
-				MyOnPaint(hdc);
-				EndPaint(hWnd, &ps);
+		case TMR_1:
+			//force window to repaint
+			InvalidateRect(hWnd, NULL, TRUE);
+			hdc = BeginPaint(hWnd, &ps);
+			MyOnPaint(hdc);
+			EndPaint(hWnd, &ps);
 			break;
 		}
 
