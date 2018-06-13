@@ -63,7 +63,9 @@ void ElevatorMove(HDC hdc)
 	{
 		switch (floor_cord)
 		{
+
 		case FLOOR_0:
+		{
 			next_floor = 4;
 			direction = "up";
 			for (int i = 0; i < vectorE.size(); i++)
@@ -87,89 +89,185 @@ void ElevatorMove(HDC hdc)
 				vector0.erase(vector0.begin() + i);
 				i--;
 			}
-			E_move = true;
+
+			if (!vectorE.empty())
+			{
+				E_move = true;
+			}
 			break;
+		}
 
 
 		case FLOOR_1:
-			if (direction == "up")
-				next_floor = 3;
-			else
-				next_floor = 0;
+		{
+			int max_floor = 3;
+			int min_floor = 0;
+			bool good_direction = false;
 
 			for (int i = 0; i < vectorE.size(); i++)
 			{
 				int personFloor = vectorE[i];
-				if (personFloor == 0)
+				if (personFloor == 1)
 				{
 					vectorE.erase(vectorE.begin() + i);
 					i--;
 				}
-				else if ((direction == "up") && (personFloor < next_floor) && (personFloor > 1))
-					next_floor = personFloor;
-				else if ((direction == "down") && (personFloor > next_floor) && (personFloor < 1))
-					next_floor = personFloor;
+				else if ((personFloor < max_floor) && (personFloor > 1))
+				{
+					max_floor = personFloor;
+					if (direction == "up")
+						good_direction = true;
+				}
+				else if ((personFloor > min_floor) && (personFloor < 1))
+				{
+					min_floor = personFloor;
+					if (direction == "down")
+						good_direction = true;
+				}
 			}
 
 
 			for (int i = 0; i < vector1.size() && vectorE.size() < 8; i++)
 			{
 				int personFloor = vector1[i];
-				if ((direction == "up") && (personFloor < next_floor) && (personFloor > 1))
-					next_floor = personFloor;
-				else if ((direction == "down") && (personFloor > next_floor) && (personFloor < 1))
-					next_floor = personFloor;
+				if ((personFloor < max_floor) && (personFloor > 1))
+				{
+					max_floor = personFloor;
+					if (direction == "up")
+						good_direction = true;
+				}
+				else if ((personFloor > min_floor) && (personFloor < 1))
+				{
+					min_floor = personFloor;
+					if (direction == "down")
+						good_direction = true;
+				}
 				vectorE.push_back(personFloor);
 				vector1.erase(vector1.begin() + i);
 				i--;
 			}
-			E_move = true;
+
+			if (vectorE.empty())
+			{
+				direction == "down";
+				next_floor = 0;
+				E_move = true;
+			}
+			else if (!vectorE.empty() && (good_direction == true))
+			{
+				if (direction == "up")
+					next_floor = max_floor;
+				else if (direction == "down")
+					next_floor = min_floor;
+				E_move = true;
+			}
+			else if (!vectorE.empty() && (good_direction == false))
+			{
+				if (direction == "up")
+				{
+					direction = "down";
+					next_floor = min_floor;
+				}
+				else if (direction == "down")
+				{
+					direction == "up";
+					next_floor = max_floor;
+				}
+				E_move = true;
+			}
+			else
+				E_move = false;
 			break;
+		}
 
 
 		case FLOOR_2:
-			if (direction == "up")
-				next_floor = 3;
-			else
-				next_floor = 0;
+		{
+			int max_floor = 3;
+			int min_floor = 0;
+			bool good_direction = false;
 
 			for (int i = 0; i < vectorE.size(); i++)
 			{
 				int personFloor = vectorE[i];
-				if (personFloor == 0)
+				if (personFloor == 2)
 				{
 					vectorE.erase(vectorE.begin() + i);
 					i--;
 				}
-				else if ((direction == "up") && (personFloor < next_floor) && (personFloor > 2))
-					next_floor = personFloor;
-				else if ((direction == "down") && (personFloor > next_floor) && (personFloor < 2))
-					next_floor = personFloor;
+				else if ((personFloor < max_floor) && (personFloor > 2))
+				{
+					max_floor = personFloor;
+					if (direction == "up")
+						good_direction = true;
+				}
+				else if ((personFloor > min_floor) && (personFloor < 2))
+				{
+					min_floor = personFloor;
+					if (direction == "down")
+						good_direction = true;
+				}
 			}
 
 
 			for (int i = 0; i < vector2.size() && vectorE.size() < 8; i++)
 			{
 				int personFloor = vector2[i];
-				if ((direction == "up") && (personFloor < next_floor) && (personFloor > 2))
-					next_floor = personFloor;
-				else if ((direction == "down") && (personFloor > next_floor) && (personFloor < 2))
-					next_floor = personFloor;
+				if ((personFloor < max_floor) && (personFloor > 2))
+				{
+					max_floor = personFloor;
+					if (direction == "up")
+						good_direction = true;
+				}
+				else if ((personFloor > min_floor) && (personFloor < 2))
+				{
+					min_floor = personFloor;
+					if (direction == "down")
+						good_direction = true;
+				}
 				vectorE.push_back(personFloor);
 				vector2.erase(vector2.begin() + i);
 				i--;
 			}
-			E_move = true;
-			break;
+
+			if (vectorE.empty())
+			{
+				direction == "down";
+				next_floor = 0;
+			}
+			else if (!vectorE.empty() && (good_direction == true))
+			{
+				if (direction == "up")
+					next_floor = max_floor;
+				else if (direction == "down")
+					next_floor = min_floor;
+				E_move = true;
+			}
+			else if (!vectorE.empty() && (good_direction == false))
+			{
+				if (direction == "up")
+				{
+					direction = "down";
+					next_floor = min_floor;
+				}
+				else if (direction == "down")
+				{
+					direction == "up";
+					next_floor = max_floor;
+				}
+				E_move = true;
+			}
+		}
 
 
 		case FLOOR_3:
+		{
 			next_floor = 0;
 			direction = "down";
 			for (int i = 0; i < vectorE.size(); i++)
 			{
 				int personFloor = vectorE[i];
-				if (personFloor == 0)
+				if (personFloor == 3)
 				{
 					vectorE.erase(vectorE.begin() + i);
 					i--;
@@ -187,8 +285,19 @@ void ElevatorMove(HDC hdc)
 				vector3.erase(vector3.begin() + i);
 				i--;
 			}
-			E_move = true;
+
+			if (vectorE.empty())
+			{
+				direction == "down";
+				next_floor = 0;
+				E_move = true;
+			}
+			else if (!vectorE.empty())
+			{
+				E_move = true;
+			}
 			break;
+		}
 		}
 
 
@@ -210,6 +319,7 @@ void ElevatorMove(HDC hdc)
 	}
 
 }
+
 
 
 void MyOnPaint(HDC hdc)
