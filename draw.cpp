@@ -218,6 +218,8 @@ void MyOnPaint(HDC hdc)
 	Graphics graphics(hdc);
 	Pen pen_blue(Color(255, 0, 0, 255));
 	Pen pen_black(Color(255, 0, 0, 0));
+	Font font(&FontFamily(L"Arial"), 12);
+	LinearGradientBrush brush(Rect(0, 0, 100, 100), Color::Red, Color::Black, LinearGradientModeHorizontal);
 	//graphics.DrawLine(&pen,0,0,200,100);
 
 	ElevatorMove(hdc);
@@ -230,6 +232,18 @@ void MyOnPaint(HDC hdc)
 	graphics.DrawLine(&pen_black, 0, 500, 250, 500);
 	graphics.DrawLine(&pen_black, 0, 350, 250, 350);
 	graphics.DrawLine(&pen_black, 0, 200, 250, 200);
+	
+	int waga = 0;
+	for (int i = 0; i < vectorE.size(); i++)
+	{
+		if (vectorE[i] != 0)
+			waga += 70;
+	}
+
+	std::wstring value_wstr = std::to_wstring(waga);
+	const wchar_t* value_str = value_wstr.c_str();                             
+	graphics.DrawString(value_str, -1, &font, PointF(910, 300), &brush);
+
 }
 
 
@@ -465,6 +479,17 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 		(HMENU)ID_BUTTON2F3,
 		hInstance,
 		NULL);
+	
+	hwndButton = CreateWindow(TEXT("EDIT"),                      
+		TEXT("Aktualna waga:"),                  
+		WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,  
+		800, 300,                                  
+		110, 25,                              
+		hWnd,                                 
+		(HMENU)slowa,                   
+		hInstance,                           
+		NULL);                               
+
 
 	OnCreate(hWnd);
 
