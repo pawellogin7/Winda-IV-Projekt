@@ -5,6 +5,7 @@
 #include "draw.h"
 #include <iostream>
 #include <Windows.h>
+#include <vector>
 
 using namespace std;
 
@@ -24,10 +25,17 @@ TCHAR szTitle[MAX_LOADSTRING];					// The title bar text
 TCHAR szWindowClass[MAX_LOADSTRING];			// the main window class name
 
 INT value;
+INT FLOOR = 0;
 INT value1 = FLOOR_0;
-INT FLOOR = FLOOR_0;
+INT FLOOR_CORD = FLOOR_0;
 INT direction = 0;
-BOOL move1 = false;
+BOOL E_move = false;
+
+vector<int>vector0;
+vector<int>vector1;
+vector<int>vector2;
+vector<int>vector3;
+vector<int>vectorE;
 
 // Forward declarations of functions included in this code module:
 ATOM				MyRegisterClass(HINSTANCE hInstance);
@@ -39,49 +47,191 @@ HWND hwndButton;
 
 void ElevatorMove(HDC hdc)
 {
-	if (move1 == false)
+
+	if (E_move == true)
 	{
-		switch (FLOOR)
+		if (value1 > FLOOR_CORD)
+			value1--;
+		else if (value1 < FLOOR_CORD)
+			value1++;
+		else
+			E_move = false;
+	}
+	else //if (0 == 1)
+	{
+		switch (FLOOR_CORD)
 		{
 		case FLOOR_0:
 			direction = 1;
-			FLOOR = FLOOR_1;
-			move1 = true;
+			FLOOR_CORD = FLOOR_1;
+			FLOOR = 1;
+			E_move = true;
 			break;
 		case FLOOR_1:
 			if (direction == 1)
-				FLOOR = FLOOR_2;
+			{
+				FLOOR_CORD = FLOOR_2;
+				FLOOR = 2;
+			}
 			else
-				FLOOR = FLOOR_0;
-			move1 = true;
+			{
+				FLOOR_CORD = FLOOR_0;
+				FLOOR = 0;
+			}
+			E_move = true;
 			break;
 		case FLOOR_2:
 			if (direction == 1)
-				FLOOR = FLOOR_3;
+			{
+				FLOOR_CORD = FLOOR_3;
+				FLOOR = 3;
+			}
 			else
-				FLOOR = FLOOR_1;
-			move1 = true;
+			{
+				FLOOR_CORD = FLOOR_1;
+				FLOOR = 1;
+			}
+			E_move = true;
 			break;
 		case FLOOR_3:
 			direction = 0;
-			FLOOR = FLOOR_2;
-			move1 = true;
+			FLOOR_CORD = FLOOR_2;
+			FLOOR = 2;
+			E_move = true;
 			break;
 		}
 	}
-	else
+
+
+
+	//if (E_move == false)
+	if (0 == 1)
 	{
-		if (value1 > FLOOR)
-			value1--;
-		else if (value1 < FLOOR)
-			value1++;
-		else
-			move1 = false;
+		switch (FLOOR_CORD)
+		{
+		case FLOOR_0:
+			if (!vectorE.empty())
+			{
+				for (int i = 0; i < vectorE.size(); i++)
+				{
+					if (*(vectorE.begin() + i) == 0)
+					{
+						vectorE.erase(vectorE.begin() + i);
+						i--;
+					}
+				}
+			}
+			while (true)
+			{
+				if ((vectorE.size() < 9) && (!vector0.empty()))
+				{
+					if ((direction == 1) && (*(vector0.begin()) < FLOOR) && (*(vector0.begin()) > 0))
+							FLOOR = *(vector0.begin());
+					vectorE.push_back(*(vector0.begin()));
+					vector0.erase(vector0.begin());
+				}
+			}
+			break;
+
+
+		case FLOOR_1:
+			if (!vectorE.empty())
+			{
+				for (int i = 0; i < vectorE.size(); i++)
+				{
+					if (*(vectorE.begin() + i) == 1)
+					{
+						vectorE.erase(vectorE.begin() + i);
+						i--;
+					}
+				}
+			}
+			while (true)
+			{
+				if ((vectorE.size() < 9) && (!vector1.empty()))
+				{
+					if ((direction == 1) && (*(vector1.begin()) < FLOOR) && (*(vector1.begin()) > 1))
+						FLOOR = *(vector0.begin());
+					else if ((direction == 0) && (*(vector1.begin()) > FLOOR) && (*(vector1.begin()) < 1))
+						FLOOR = *(vector1.begin());
+					vectorE.push_back(*(vector1.begin()));
+					vector1.erase(vector1.begin());
+				}
+			}
+			break;
+
+
+		case FLOOR_2:
+			if (!vectorE.empty())
+			{
+				for (int i = 0; i < vectorE.size(); i++)
+				{
+					if (*(vectorE.begin() + i) == 2)
+					{
+						vectorE.erase(vectorE.begin() + i);
+						i--;
+					}
+				}
+			}
+			while (true)
+			{
+				if ((vectorE.size() < 9) && (!vector2.empty()))
+				{
+					if ((direction == 1) && (*(vector2.begin()) < FLOOR) && (*(vector2.begin()) > 2))
+						FLOOR = *(vector0.begin());
+					else if ((direction == 0) && (*(vector2.begin()) > FLOOR) && (*(vector2.begin()) < 2))
+						FLOOR = *(vector2.begin());
+					vectorE.push_back(*(vector2.begin()));
+					vector2.erase(vector2.begin());
+				}
+			}
+			break;
+
+
+		case FLOOR_3:
+			if (!vectorE.empty())
+			{
+				for (int i = 0; i < vectorE.size(); i++)
+				{
+					if (*(vectorE.begin() + i) == 3)
+					{
+						vectorE.erase(vectorE.begin() + i);
+						i--;
+					}
+				}
+			}
+			while (true)
+			{
+				if ((vectorE.size() < 9) && (!vector3.empty()))
+				{
+					if ((direction == 0) && (*(vector3.begin()) > FLOOR) && (*(vector3.begin()) < 1))
+						FLOOR = *(vector3.begin());
+					vectorE.push_back(*(vector3.begin()));
+					vector3.erase(vector3.begin());
+				}
+			}
+			break;
+		}
 	}
 
-
+	switch (FLOOR)
+	{
+	case 0:
+		FLOOR_CORD = FLOOR_0;
+		break;
+	case 1:
+		FLOOR_CORD = FLOOR_1;
+		break;
+	case 2:
+		FLOOR_CORD = FLOOR_2;
+		break;
+	case 3:
+		FLOOR_CORD = FLOOR_3;
+		break;
+	}
 
 }
+
 
 void MyOnPaint(HDC hdc)
 {
@@ -388,55 +538,55 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		break;
 	//0
 	case ID_BUTTON1F0:
-		MyOnPaint(hdc);
-		EndPaint(hWnd, &ps);
+		if (vector0.size() < 11)
+			vector0.push_back(1);
 		break;
 	case ID_BUTTON2F0:
-		MyOnPaint(hdc);
-		EndPaint(hWnd, &ps);
+		if (vector0.size() < 11)
+			vector0.push_back(2);
 		break;
 	case ID_BUTTON3F0:
-		MyOnPaint(hdc);
-		EndPaint(hWnd, &ps);
+		if (vector0.size() < 11)
+			vector0.push_back(3);
 		break;
-		//1
+	//1
 	case ID_BUTTON0F1:
-		MyOnPaint(hdc);
-		EndPaint(hWnd, &ps);
+		if (vector1.size() < 11)
+			vector1.push_back(0);
 		break;
 	case ID_BUTTON2F1:
-		MyOnPaint(hdc);
-		EndPaint(hWnd, &ps);
+		if (vector1.size() < 11)
+			vector1.push_back(2);
 		break;
 	case ID_BUTTON3F1:
-		MyOnPaint(hdc);
-		EndPaint(hWnd, &ps);
+		if (vector1.size() < 11)
+			vector1.push_back(3);
 		break;
-		//
+	//2
 	case ID_BUTTON0F2:
-		MyOnPaint(hdc);
-		EndPaint(hWnd, &ps);
+		if (vector2.size() < 11)
+			vector2.push_back(0);
 		break;
 	case ID_BUTTON1F2:
-		MyOnPaint(hdc);
-		EndPaint(hWnd, &ps);
+		if (vector2.size() < 11)
+			vector2.push_back(1);
 		break;
 	case ID_BUTTON3F2:
-		MyOnPaint(hdc);
-		EndPaint(hWnd, &ps);
+		if (vector2.size() < 11)
+			vector2.push_back(3);
 		break;
-		//3
+	//3
 	case ID_BUTTON0F3:
-		MyOnPaint(hdc);
-		EndPaint(hWnd, &ps);
+		if (vector3.size() < 11)
+			vector3.push_back(0);
 		break;
 	case ID_BUTTON1F3:
-		MyOnPaint(hdc);
-		EndPaint(hWnd, &ps);
+		if (vector3.size() < 11)
+			vector3.push_back(1);
 		break;
 	case ID_BUTTON2F3:
-		MyOnPaint(hdc);
-		EndPaint(hWnd, &ps);
+		if (vector3.size() < 11)
+			vector3.push_back(2);
 		break;
 
 	case WM_PAINT:
