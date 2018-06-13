@@ -58,66 +58,23 @@ void ElevatorMove(HDC hdc)
 		else
 			E_move = false;
 	}
-	else if (0 == 1)
+	else
 	{
 		switch (floor_cord)
 		{
 		case FLOOR_0:
+			next_floor = 4;
 			direction = "up";
-			floor_cord = FLOOR_1;
-			next_floor = 1;
-			E_move = true;
-			break;
-		case FLOOR_1:
-			if (direction == "up")
-			{
-				floor_cord = FLOOR_2;
-				next_floor = 2;
-			}
-			else
-			{
-				floor_cord = FLOOR_0;
-				next_floor = 0;
-			}
-			E_move = true;
-			break;
-		case FLOOR_2:
-			if (direction == "up")
-			{
-				floor_cord = FLOOR_3;
-				next_floor = 3;
-			}
-			else
-			{
-				floor_cord = FLOOR_1;
-				next_floor = 1;
-			}
-			E_move = true;
-			break;
-		case FLOOR_3:
-			direction = "down";
-			floor_cord = FLOOR_2;
-			next_floor = 2;
-			E_move = true;
-			break;
-		}
-	}
-
-
-
-	if (E_move == false)
-	//if (0 == 1)
-	{
-		switch (floor_cord)
-		{
-		case FLOOR_0:
 			for (vector<int>::iterator it = vectorE.begin(); it != vectorE.end(); it++)
 			{
-				int currentFloor = *it;
-				if(currentFloor == 0)
+				int personFloor = *it;
+				if (personFloor == 0)
 					vectorE.erase(it);
+				else if (personFloor < next_floor)
+					next_floor = personFloor;
+
 			}
-			
+
 			for (vector<int>::iterator it = vector0.begin(); it != vector0.end() && vectorE.size() < 8; it++)
 			{
 				int personFloor = *it;
@@ -130,11 +87,20 @@ void ElevatorMove(HDC hdc)
 
 
 		case FLOOR_1:
+			if (direction == "up")
+				next_floor = 3;
+			else
+				next_floor = 0;
+
 			for (vector<int>::iterator it = vectorE.begin(); it != vectorE.end(); it++)
 			{
-				int currentFloor = *it;
-				if (currentFloor == 1)
+				int personFloor = *it;
+				if (personFloor == 1)
 					vectorE.erase(it);
+				else if ((direction == "up") && (personFloor < next_floor) && (personFloor > 1))
+					next_floor = personFloor;
+				else if ((direction == "down") && (personFloor > next_floor) && (personFloor < 1))
+					next_floor = personFloor;
 			}
 
 			for (vector<int>::iterator it = vector1.begin(); it != vector1.end() && vectorE.size() < 8; it++)
@@ -142,7 +108,7 @@ void ElevatorMove(HDC hdc)
 				int personFloor = *it;
 				if ((direction == "up") && (personFloor < next_floor) && (personFloor > 1))
 					next_floor = personFloor;
-				if ((direction == "down") && (personFloor > next_floor) && (personFloor < 1))
+				else if ((direction == "down") && (personFloor > next_floor) && (personFloor < 1))
 					next_floor = personFloor;
 				vectorE.push_back(personFloor);
 				vector1.erase(it);
@@ -151,11 +117,20 @@ void ElevatorMove(HDC hdc)
 
 
 		case FLOOR_2:
+			if (direction == "up")
+				next_floor = 3;
+			else
+				next_floor = 0;
+
 			for (vector<int>::iterator it = vectorE.begin(); it != vectorE.end(); it++)
 			{
-				int currentFloor = *it;
-				if (currentFloor == 2)
+				int personFloor = *it;
+				if (personFloor == 2)
 					vectorE.erase(it);
+				else if ((direction == "up") && (personFloor < next_floor) && (personFloor > 2))
+					next_floor = personFloor;
+				else if ((direction == "down") && (personFloor > next_floor) && (personFloor < 2))
+					next_floor = personFloor;
 			}
 
 			for (vector<int>::iterator it = vector2.begin(); it != vector2.end() && vectorE.size() < 8; it++)
@@ -163,7 +138,7 @@ void ElevatorMove(HDC hdc)
 				int personFloor = *it;
 				if ((direction == "up") && (personFloor < next_floor) && (personFloor > 2))
 					next_floor = personFloor;
-				if ((direction == "down") && (personFloor > next_floor) && (personFloor < 2))
+				else if ((direction == "down") && (personFloor > next_floor) && (personFloor < 2))
 					next_floor = personFloor;
 				vectorE.push_back(personFloor);
 				vector2.erase(it);
@@ -172,11 +147,15 @@ void ElevatorMove(HDC hdc)
 
 
 		case FLOOR_3:
+			next_floor = 0;
+			direction = "down";
 			for (vector<int>::iterator it = vectorE.begin(); it != vectorE.end(); it++)
 			{
-				int currentFloor = *it;
-				if (currentFloor == 3)
+				int personFloor = *it;
+				if (personFloor == 3)
 					vectorE.erase(it);
+				else if ((direction == "down") && (personFloor > next_floor) && (personFloor < 3))
+					next_floor = personFloor;
 			}
 
 			for (vector<int>::iterator it = vector3.begin(); it != vector3.end() && vectorE.size() < 8; it++)
@@ -190,6 +169,7 @@ void ElevatorMove(HDC hdc)
 			break;
 		}
 	}
+
 
 	switch (next_floor)
 	{
@@ -509,71 +489,71 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		case IDM_EXIT:
 			DestroyWindow(hWnd);
 			break;
+			//0
+		case ID_BUTTON1F0:
+			if (vector0.size() < 10)
+				vector0.push_back(1);
+			break;
+		case ID_BUTTON2F0:
+			if (vector0.size() < 10)
+				vector0.push_back(2);
+			break;
+		case ID_BUTTON3F0:
+			if (vector0.size() < 10)
+				vector0.push_back(3);
+			break;
+			//1
+		case ID_BUTTON0F1:
+			if (vector1.size() < 10)
+				vector1.push_back(0);
+			break;
+		case ID_BUTTON2F1:
+			if (vector1.size() < 10)
+				vector1.push_back(2);
+			break;
+		case ID_BUTTON3F1:
+			if (vector1.size() < 10)
+				vector1.push_back(3);
+			break;
+			//2
+		case ID_BUTTON0F2:
+			if (vector2.size() < 10)
+				vector2.push_back(0);
+			break;
+		case ID_BUTTON1F2:
+			if (vector2.size() < 10)
+				vector2.push_back(1);
+			break;
+		case ID_BUTTON3F2:
+			if (vector2.size() < 10)
+				vector2.push_back(3);
+			break;
+			//3
+		case ID_BUTTON0F3:
+			if (vector3.size() < 10)
+				vector3.push_back(0);
+			break;
+		case ID_BUTTON1F3:
+			if (vector3.size() < 10)
+				vector3.push_back(1);
+			break;
+		case ID_BUTTON2F3:
+			if (vector3.size() < 10)
+				vector3.push_back(2);
+			break;
+
+		case WM_PAINT:
+			hdc = BeginPaint(hWnd, &ps);
+			// TODO: Add any drawing code here...
+			MyOnPaint(hdc);
+			EndPaint(hWnd, &ps);
+			break;
+		case WM_DESTROY:
+			PostQuitMessage(0);
+			break;
 		default:
 			return DefWindowProc(hWnd, message, wParam, lParam);
 		}
-		break;
-	//0
-	case ID_BUTTON1F0:
-		if (vector0.size() < 11)
-			vector0.push_back(1);
-		break;
-	case ID_BUTTON2F0:
-		if (vector0.size() < 11)
-			vector0.push_back(2);
-		break;
-	case ID_BUTTON3F0:
-		if (vector0.size() < 11)
-			vector0.push_back(3);
-		break;
-	//1
-	case ID_BUTTON0F1:
-		if (vector1.size() < 11)
-			vector1.push_back(0);
-		break;
-	case ID_BUTTON2F1:
-		if (vector1.size() < 11)
-			vector1.push_back(2);
-		break;
-	case ID_BUTTON3F1:
-		if (vector1.size() < 11)
-			vector1.push_back(3);
-		break;
-	//2
-	case ID_BUTTON0F2:
-		if (vector2.size() < 11)
-			vector2.push_back(0);
-		break;
-	case ID_BUTTON1F2:
-		if (vector2.size() < 11)
-			vector2.push_back(1);
-		break;
-	case ID_BUTTON3F2:
-		if (vector2.size() < 11)
-			vector2.push_back(3);
-		break;
-	//3
-	case ID_BUTTON0F3:
-		if (vector3.size() < 11)
-			vector3.push_back(0);
-		break;
-	case ID_BUTTON1F3:
-		if (vector3.size() < 11)
-			vector3.push_back(1);
-		break;
-	case ID_BUTTON2F3:
-		if (vector3.size() < 11)
-			vector3.push_back(2);
-		break;
-
-	case WM_PAINT:
-		hdc = BeginPaint(hWnd, &ps);
-		// TODO: Add any drawing code here...
-		MyOnPaint(hdc);
-		EndPaint(hWnd, &ps);
-		break;
-	case WM_DESTROY:
-		PostQuitMessage(0);
 		break;
 
 	case WM_TIMER:
