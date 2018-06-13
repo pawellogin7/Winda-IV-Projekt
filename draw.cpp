@@ -6,6 +6,7 @@
 #include <iostream>
 #include <Windows.h>
 #include <vector>
+#include <string>
 
 using namespace std;
 
@@ -25,10 +26,10 @@ TCHAR szTitle[MAX_LOADSTRING];					// The title bar text
 TCHAR szWindowClass[MAX_LOADSTRING];			// the main window class name
 
 INT value;
-INT FLOOR = 0;
+INT next_floor = 0;
 INT value1 = FLOOR_0;
-INT FLOOR_CORD = FLOOR_0;
-INT direction = 0;
+INT floor_cord = FLOOR_0;
+string direction = "down";
 BOOL E_move = false;
 
 vector<int>vector0;
@@ -50,53 +51,53 @@ void ElevatorMove(HDC hdc)
 
 	if (E_move == true)
 	{
-		if (value1 > FLOOR_CORD)
+		if (value1 > floor_cord)
 			value1--;
-		else if (value1 < FLOOR_CORD)
+		else if (value1 < floor_cord)
 			value1++;
 		else
 			E_move = false;
 	}
-	else //if (0 == 1)
+	else if (0 == 1)
 	{
-		switch (FLOOR_CORD)
+		switch (floor_cord)
 		{
 		case FLOOR_0:
-			direction = 1;
-			FLOOR_CORD = FLOOR_1;
-			FLOOR = 1;
+			direction = "up";
+			floor_cord = FLOOR_1;
+			next_floor = 1;
 			E_move = true;
 			break;
 		case FLOOR_1:
-			if (direction == 1)
+			if (direction == "up")
 			{
-				FLOOR_CORD = FLOOR_2;
-				FLOOR = 2;
+				floor_cord = FLOOR_2;
+				next_floor = 2;
 			}
 			else
 			{
-				FLOOR_CORD = FLOOR_0;
-				FLOOR = 0;
+				floor_cord = FLOOR_0;
+				next_floor = 0;
 			}
 			E_move = true;
 			break;
 		case FLOOR_2:
-			if (direction == 1)
+			if (direction == "up")
 			{
-				FLOOR_CORD = FLOOR_3;
-				FLOOR = 3;
+				floor_cord = FLOOR_3;
+				next_floor = 3;
 			}
 			else
 			{
-				FLOOR_CORD = FLOOR_1;
-				FLOOR = 1;
+				floor_cord = FLOOR_1;
+				next_floor = 1;
 			}
 			E_move = true;
 			break;
 		case FLOOR_3:
-			direction = 0;
-			FLOOR_CORD = FLOOR_2;
-			FLOOR = 2;
+			direction = "down";
+			floor_cord = FLOOR_2;
+			next_floor = 2;
 			E_move = true;
 			break;
 		}
@@ -104,129 +105,105 @@ void ElevatorMove(HDC hdc)
 
 
 
-	//if (E_move == false)
-	if (0 == 1)
+	if (E_move == false)
+	//if (0 == 1)
 	{
-		switch (FLOOR_CORD)
+		switch (floor_cord)
 		{
 		case FLOOR_0:
-			if (!vectorE.empty())
+			for (vector<int>::iterator it = vectorE.begin(); it != vectorE.end(); it++)
 			{
-				for (int i = 0; i < vectorE.size(); i++)
-				{
-					if (*(vectorE.begin() + i) == 0)
-					{
-						vectorE.erase(vectorE.begin() + i);
-						i--;
-					}
-				}
+				int currentFloor = *it;
+				if(currentFloor == 0)
+					vectorE.erase(it);
 			}
-			while (true)
+			
+			for (vector<int>::iterator it = vector0.begin(); it != vector0.end() && vectorE.size() < 8; it++)
 			{
-				if ((vectorE.size() < 9) && (!vector0.empty()))
-				{
-					if ((direction == 1) && (*(vector0.begin()) < FLOOR) && (*(vector0.begin()) > 0))
-							FLOOR = *(vector0.begin());
-					vectorE.push_back(*(vector0.begin()));
-					vector0.erase(vector0.begin());
-				}
+				int personFloor = *it;
+				if ((direction == "up") && (personFloor < next_floor) && (personFloor > 0))
+					next_floor = personFloor;
+				vectorE.push_back(personFloor);
+				vector0.erase(it);
 			}
 			break;
 
 
 		case FLOOR_1:
-			if (!vectorE.empty())
+			for (vector<int>::iterator it = vectorE.begin(); it != vectorE.end(); it++)
 			{
-				for (int i = 0; i < vectorE.size(); i++)
-				{
-					if (*(vectorE.begin() + i) == 1)
-					{
-						vectorE.erase(vectorE.begin() + i);
-						i--;
-					}
-				}
+				int currentFloor = *it;
+				if (currentFloor == 1)
+					vectorE.erase(it);
 			}
-			while (true)
+
+			for (vector<int>::iterator it = vector1.begin(); it != vector1.end() && vectorE.size() < 8; it++)
 			{
-				if ((vectorE.size() < 9) && (!vector1.empty()))
-				{
-					if ((direction == 1) && (*(vector1.begin()) < FLOOR) && (*(vector1.begin()) > 1))
-						FLOOR = *(vector0.begin());
-					else if ((direction == 0) && (*(vector1.begin()) > FLOOR) && (*(vector1.begin()) < 1))
-						FLOOR = *(vector1.begin());
-					vectorE.push_back(*(vector1.begin()));
-					vector1.erase(vector1.begin());
-				}
+				int personFloor = *it;
+				if ((direction == "up") && (personFloor < next_floor) && (personFloor > 1))
+					next_floor = personFloor;
+				if ((direction == "down") && (personFloor > next_floor) && (personFloor < 1))
+					next_floor = personFloor;
+				vectorE.push_back(personFloor);
+				vector1.erase(it);
 			}
 			break;
 
 
 		case FLOOR_2:
-			if (!vectorE.empty())
+			for (vector<int>::iterator it = vectorE.begin(); it != vectorE.end(); it++)
 			{
-				for (int i = 0; i < vectorE.size(); i++)
-				{
-					if (*(vectorE.begin() + i) == 2)
-					{
-						vectorE.erase(vectorE.begin() + i);
-						i--;
-					}
-				}
+				int currentFloor = *it;
+				if (currentFloor == 2)
+					vectorE.erase(it);
 			}
-			while (true)
+
+			for (vector<int>::iterator it = vector2.begin(); it != vector2.end() && vectorE.size() < 8; it++)
 			{
-				if ((vectorE.size() < 9) && (!vector2.empty()))
-				{
-					if ((direction == 1) && (*(vector2.begin()) < FLOOR) && (*(vector2.begin()) > 2))
-						FLOOR = *(vector0.begin());
-					else if ((direction == 0) && (*(vector2.begin()) > FLOOR) && (*(vector2.begin()) < 2))
-						FLOOR = *(vector2.begin());
-					vectorE.push_back(*(vector2.begin()));
-					vector2.erase(vector2.begin());
-				}
+				int personFloor = *it;
+				if ((direction == "up") && (personFloor < next_floor) && (personFloor > 2))
+					next_floor = personFloor;
+				if ((direction == "down") && (personFloor > next_floor) && (personFloor < 2))
+					next_floor = personFloor;
+				vectorE.push_back(personFloor);
+				vector2.erase(it);
 			}
 			break;
 
 
 		case FLOOR_3:
-			if (!vectorE.empty())
+			for (vector<int>::iterator it = vectorE.begin(); it != vectorE.end(); it++)
 			{
-				for (int i = 0; i < vectorE.size(); i++)
-				{
-					if (*(vectorE.begin() + i) == 3)
-					{
-						vectorE.erase(vectorE.begin() + i);
-						i--;
-					}
-				}
+				int currentFloor = *it;
+				if (currentFloor == 3)
+					vectorE.erase(it);
 			}
-			while (true)
+
+			for (vector<int>::iterator it = vector3.begin(); it != vector3.end() && vectorE.size() < 8; it++)
 			{
-				if ((vectorE.size() < 9) && (!vector3.empty()))
-				{
-					if ((direction == 0) && (*(vector3.begin()) > FLOOR) && (*(vector3.begin()) < 1))
-						FLOOR = *(vector3.begin());
-					vectorE.push_back(*(vector3.begin()));
-					vector3.erase(vector3.begin());
-				}
+				int personFloor = *it;
+				if ((direction == "down") && (personFloor > next_floor) && (personFloor < 3))
+					next_floor = personFloor;
+				vectorE.push_back(personFloor);
+				vector3.erase(it);
 			}
 			break;
 		}
 	}
 
-	switch (FLOOR)
+	switch (next_floor)
 	{
 	case 0:
-		FLOOR_CORD = FLOOR_0;
+		floor_cord = FLOOR_0;
 		break;
 	case 1:
-		FLOOR_CORD = FLOOR_1;
+		floor_cord = FLOOR_1;
 		break;
 	case 2:
-		FLOOR_CORD = FLOOR_2;
+		floor_cord = FLOOR_2;
 		break;
 	case 3:
-		FLOOR_CORD = FLOOR_3;
+		floor_cord = FLOOR_3;
 		break;
 	}
 
