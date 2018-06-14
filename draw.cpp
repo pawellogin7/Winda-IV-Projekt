@@ -17,6 +17,8 @@ using namespace std;
 #define FLOOR_1 500
 #define FLOOR_2 350
 #define FLOOR_3 200
+#define UP 1
+#define DOWN -1
 
 void ElevatorMove(HDC hdc);
 
