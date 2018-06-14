@@ -320,77 +320,85 @@ void ElevatorMove(HDC hdc)
 
 }
 
-void Draw_passengers_3 (HDC hdc, int size)
+void Draw_passengers_3(HDC hdc)
 {
+	int size = vector3.size();
+	Graphics graphics(hdc);
 	Pen pen_white(Color(255, 255, 255, 255));
 	Pen pen_black(Color(255, 0, 0, 0));
 
-	for(int i=0;i<size;i++)
+	for (int i = 0; i < size; i++)
 	{
-		graphics.DrawLine(&pen_black, 225 - i*25, 670, 240 - i*25, 670);
-		graphics.DrawLine(&pen_black, 225 - i*25, 670, 225 - i*25, 650);
-		graphics.DrawLine(&pen_black, 240 - i*25, 670, 240 - i*25, 650);
-	}	
-	for(int i=size;i<11;i++)
-	{	
-		graphics.DrawLine(&pen_white, 225 - i*25, 670, 240 - i*25, 670);
-		graphics.DrawLine(&pen_white, 225 - i*25, 670, 225 - i*25, 651);
-		graphics.DrawLine(&pen_white, 240 - i*25, 670, 240 - i*25, 651);
-	}	
+		graphics.DrawLine(&pen_black, 225 - i * 25, 670, 240 - i * 25, 670);
+		graphics.DrawLine(&pen_black, 225 - i * 25, 670, 225 - i * 25, 650);
+		graphics.DrawLine(&pen_black, 240 - i * 25, 670, 240 - i * 25, 650);
+	}
+	for (int i = size; i < 11; i++)
+	{
+		graphics.DrawLine(&pen_white, 225 - i * 25, 670, 240 - i * 25, 670);
+		graphics.DrawLine(&pen_white, 225 - i * 25, 670, 225 - i * 25, 651);
+		graphics.DrawLine(&pen_white, 240 - i * 25, 670, 240 - i * 25, 651);
+	}
 }
 
-void Draw_passengers_2 (HDC hdc,int size)
+void Draw_passengers_2(HDC hdc)
 {
+	int size = vector2.size();
+	Graphics graphics(hdc);
 	Pen pen_white(Color(255, 255, 255, 255));
 	Pen pen_black(Color(255, 0, 0, 0));
 
-	for(int i=0;i<size;i++)
+	for (int i = 0; i < size; i++)
 	{
-		graphics.DrawLine(&pen_black, 225 - i*25, 520, 240 - i*25, 520);
-		graphics.DrawLine(&pen_black, 225 - i*25, 520, 225 - i*25, 500);
-		graphics.DrawLine(&pen_black, 240 - i*25, 520, 240 - i*25, 500);
+		graphics.DrawLine(&pen_black, 225 - i * 25, 520, 240 - i * 25, 520);
+		graphics.DrawLine(&pen_black, 225 - i * 25, 520, 225 - i * 25, 500);
+		graphics.DrawLine(&pen_black, 240 - i * 25, 520, 240 - i * 25, 500);
 	}
-	for(int i=size;i<11;i++)
+	for (int i = size; i < 11; i++)
 	{
-		graphics.DrawLine(&pen_white, 225 - i*25, 520, 240 - i*25, 520);
-		graphics.DrawLine(&pen_white, 225 - i*25, 520, 225 - i*25, 501);
-		graphics.DrawLine(&pen_white, 240 - i*25, 520, 240 - i*25, 501);
+		graphics.DrawLine(&pen_white, 225 - i * 25, 520, 240 - i * 25, 520);
+		graphics.DrawLine(&pen_white, 225 - i * 25, 520, 225 - i * 25, 501);
+		graphics.DrawLine(&pen_white, 240 - i * 25, 520, 240 - i * 25, 501);
 	}
 }
-void Draw_passengers_1 (HDC hdc, int size)
+void Draw_passengers_1(HDC hdc)
 {
+	int size = vector1.size();
+	Graphics graphics(hdc);
 	Pen pen_white(Color(255, 255, 255, 255));
 	Pen pen_black(Color(255, 0, 0, 0));
 
-	for(int i=0;i<size;i++)
+	for (int i = 0; i < size; i++)
 	{
-		graphics.DrawLine(&pen_black, 225 - i*25, 370, 240 - i*25, 370);
-		graphics.DrawLine(&pen_black, 225 - i*25, 370, 225 - i*25, 350);
-		graphics.DrawLine(&pen_black, 240 - i*25, 370, 240 - i*25, 350);
+		graphics.DrawLine(&pen_black, 225 - i * 25, 370, 240 - i * 25, 370);
+		graphics.DrawLine(&pen_black, 225 - i * 25, 370, 225 - i * 25, 350);
+		graphics.DrawLine(&pen_black, 240 - i * 25, 370, 240 - i * 25, 350);
 	}
-	for(int i=size;i<11;i++)
+	for (int i = size; i < 11; i++)
 	{
-		graphics.DrawLine(&pen_white, 225 - i*25, 370, 240 - i*25, 370);
-		graphics.DrawLine(&pen_white, 225 - i*25, 370, 225 - i*25, 351);
-		graphics.DrawLine(&pen_white, 240 - i*25, 370, 240 - i*25, 351);
+		graphics.DrawLine(&pen_white, 225 - i * 25, 370, 240 - i * 25, 370);
+		graphics.DrawLine(&pen_white, 225 - i * 25, 370, 225 - i * 25, 351);
+		graphics.DrawLine(&pen_white, 240 - i * 25, 370, 240 - i * 25, 351);
 	}
 }
-void Draw_passengers_0 (HDC hdc, int size)
+void Draw_passengers_0(HDC hdc)
 {
+	int size = vector0.size();
+	Graphics graphics(hdc);
 	Pen pen_white(Color(255, 255, 255, 255));
 	Pen pen_black(Color(255, 0, 0, 0));
 
-	for(int i=0;i<size;i++)
+	for (int i = 0; i < size; i++)
 	{
-		graphics.DrawLine(&pen_black, 225 - i*15, 220, 240 - i*15, 220);
-		graphics.DrawLine(&pen_black, 225 - i*15, 220, 225 - i*15, 200);
-		graphics.DrawLine(&pen_black, 240 - i*15, 220, 240 - i*15, 200);
+		graphics.DrawLine(&pen_black, 225 - i * 15, 220, 240 - i * 15, 220);
+		graphics.DrawLine(&pen_black, 225 - i * 15, 220, 225 - i * 15, 200);
+		graphics.DrawLine(&pen_black, 240 - i * 15, 220, 240 - i * 15, 200);
 	}
-	for(int i=size;i<11;i++)
+	for (int i = size; i < 11; i++)
 	{
-		graphics.DrawLine(&pen_white, 225 - i*15, 220, 240 - i*15, 220);
-		graphics.DrawLine(&pen_white, 225 - i*15, 220, 225 - i*15, 201);
-		graphics.DrawLine(&pen_white, 240 - i*15, 220, 240 - i*15, 201);
+		graphics.DrawLine(&pen_white, 225 - i * 15, 220, 240 - i * 15, 220);
+		graphics.DrawLine(&pen_white, 225 - i * 15, 220, 225 - i * 15, 201);
+		graphics.DrawLine(&pen_white, 240 - i * 15, 220, 240 - i * 15, 201);
 	}
 }
 
@@ -414,6 +422,11 @@ void MyOnPaint(HDC hdc)
 	graphics.DrawLine(&pen_black, 0, 500, 250, 500);
 	graphics.DrawLine(&pen_black, 0, 350, 250, 350);
 	graphics.DrawLine(&pen_black, 0, 200, 250, 200);
+	
+	Draw_passengers_0(hdc);
+	Draw_passengers_1(hdc);
+	Draw_passengers_2(hdc);
+	Draw_passengers_3(hdc);
 	
 	int waga = 0;
 	for (int i = 0; i < vectorE.size(); i++)
