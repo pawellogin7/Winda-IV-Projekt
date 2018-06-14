@@ -56,19 +56,32 @@ void ElevatorMove(HDC hdc)
 		if ((value1 < FLOOR_0) && (value1 > FLOOR_1))
 		{
 			if ((direction == UP) && !vector1.empty())
+			{
 				next_floor = 1;
+				floor_cord = FLOOR_1;
+				int x = 0;
+			}
 		}
 		else if ((value1 < FLOOR_1) && (value1 > FLOOR_2))
 		{
 			if ((direction == UP) && !vector2.empty())
+			{
 				next_floor = 2;
+				floor_cord = FLOOR_2;
+			}
 			else if ((direction == DOWN) && !vector1.empty())
+			{
 				next_floor = 1;
+				floor_cord = FLOOR_1;
+			}
 		}
 		else if ((value1 < FLOOR_2) && (value1 > FLOOR_3))
 		{
 			if ((direction == DOWN) && !vector2.empty())
+			{
 				next_floor = 2;
+				floor_cord = FLOOR_2;
+			}
 		}
 
 		if (value1 > floor_cord)
@@ -263,7 +276,9 @@ void ElevatorMove(HDC hdc)
 				{
 					max_floor = personFloor;
 					if (direction == UP)
+					{
 						good_direction = true;
+					}
 				}
 				else if ((personFloor >= min_floor) && (personFloor < 2))
 				{
@@ -317,6 +332,7 @@ void ElevatorMove(HDC hdc)
 				next_floor = 3;
 				E_move = true;
 			}
+			break;
 		}
 
 
