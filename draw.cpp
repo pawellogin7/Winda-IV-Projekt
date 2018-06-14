@@ -31,7 +31,7 @@ INT value;
 INT next_floor = 0;
 INT value1 = FLOOR_0;
 INT floor_cord = FLOOR_0;
-string direction = "down";
+INT direction = DOWN;
 BOOL E_move = false;
 
 vector<int>vector0;
