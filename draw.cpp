@@ -355,6 +355,10 @@ void MyOnPaint(HDC hdc)
 	const wchar_t* value_str = value_wstr.c_str();                             
 	graphics.DrawString(value_str, -1, &font, PointF(910, 300), &brush);
 
+	if (waga >= 560)
+	{
+	TextOut(hdc, 910, 300, L"PRZECIAZENIE", 12);
+	}
 }
 
 
